@@ -13,8 +13,9 @@ import { ChakraProvider } from '@chakra-ui/react'
 function MyApp({ Component, pageProps }) {
 	const { Header, Footer } = SiteLayout
 	const { AdminHeader, AdminFooter } = AdminLayout
+	const queryClient = new QueryClient()
+
 	if (Component.getLayout == 'admin') {
-		const queryClient = new QueryClient()
 		return (
 			<QueryClientProvider client={queryClient}>
 				<ChakraProvider>
@@ -33,11 +34,15 @@ function MyApp({ Component, pageProps }) {
 		return (<ChakraProvider><Component {...pageProps} /></ChakraProvider>)
 	}
 	return (
-		<ChakraProvider>
-			<Header />
-			<Component {...pageProps} />
-			<Footer />
-		</ChakraProvider>
+		<QueryClientProvider client={queryClient}>
+
+			<ChakraProvider>
+				<Header />
+				<Component {...pageProps} />
+				<Footer />
+				<ReactQueryDevtools initialIsOpen={false} />
+			</ChakraProvider>
+		</QueryClientProvider>
 	)
 }
 

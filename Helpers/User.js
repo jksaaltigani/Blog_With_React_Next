@@ -2,24 +2,31 @@ import axios from 'axios'
 import token from './Token';
 import appStorage from './AppStorage'
 class User {
-	login(data) {
-		axios
+	async login(data) {
+		const loginDone = true;
+		data = await axios
 			.post("http://localhost:8000/api/auth/login", data)
 			.then((re) => {
-				this.ResponseAfterLogin(re);
+				return this.ResponseAfterLogin(re);
+				loginDone = true;
 			})
 			.catch((err) => {
+				loginDone = false;
 				return err.response;
 			});
+		return loginDone;
 	}
 
 	ResponseAfterLogin(re) {
 		const tokenFromData = re.data.access_token;
 		const UserFromData = re.data.user;
 		console.log(UserFromData, tokenFromData);
+
 		if (token.isValid(re.data.access_token)) {
 			console.log(re);
 			appStorage.setUserDataAndToken(UserFromData, tokenFromData);
+			return true;
+
 			document.location = '/admin/dashboard';
 		}
 

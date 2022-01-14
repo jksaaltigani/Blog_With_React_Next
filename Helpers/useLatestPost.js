@@ -1,14 +1,14 @@
 import React from 'react'
 import useSWR from 'swr'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 function useLatestPost() {
-	const fetcher = async () => {
+	const fetcher = () => {
 		const API = 'http://localhost:8000/api/quetions'
-		const response = await fetch(API);
-		const data = await response.json();
-		return data.data;
+		return axios(API);
 	}
-	return useSWR('latest-post-query-fetcher', fetcher)
+	return useQuery('latest-post-query-fetcher', fetcher)
 }
 
 export default useLatestPost

@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 
 import { MdSettings, MdMail, MdNotifications } from 'react-icons/md'
-
+import NotificationTab from './NotificationTab';
 
 
 
@@ -31,11 +31,9 @@ function MessgesNotifcationDrawer({ data }) {
 			<Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='md'>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerHeader borderBottomWidth='1px'> {name} </DrawerHeader>
+					<DrawerHeader borderBottomWidth='1px'>  <Icon as={MdNotifications} w={10} h={10} />  {name}  </DrawerHeader>
 					<DrawerBody>
-						<p>Some contents...</p>
-						<p>Some contents...</p>
-						<p>Some contents...</p>
+						{type == 'n' ? <NotificationTab /> : <Icon as={MdMail} w={8} h={8} />}
 					</DrawerBody>
 				</DrawerContent>
 			</Drawer>

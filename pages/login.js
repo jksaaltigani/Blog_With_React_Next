@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {
 	Center, Box, Heading, Text, Button, Input,
 	InputGroup,
-	InputLeftElement
+	InputLeftElement,
+	useToast
 } from '@chakra-ui/react'
 
 import { useFormik } from 'formik'
@@ -13,6 +14,10 @@ import { useRouter } from 'next/router';
 function login() {
 	const [Loading, setLoading] = useState(false)
 	const route = useRouter()
+	console.log(route);
+	// route.push('admin/dashboard')
+	const toast = useToast()
+
 	useEffect(() => {
 
 	}, []);
@@ -20,10 +25,32 @@ function login() {
 		email: '',
 		password: ''
 	}
-	const onSubmit = (val) => {
+	const onSubmit = async (val) => {
 		setLoading(true)
 		console.log(val)
-		user.login(val);
+		const value = await user.login(val)
+		if (value) {
+			toast({
+				title: 'login opration',
+				description: "wait few miunte to prepare your account ",
+				status: 'success',
+				duration: 5000,
+				isClosable: true,
+				position: 'top'
+			});
+
+			route.push('/admin/dashboard')
+		} else {
+			toast({
+				title: 'login Error ',
+				description: "something went worng  try again please",
+				status: 'error',
+				duration: 10000,
+				isClosable: true,
+				position: 'top'
+			})
+		}
+
 	}
 
 	const Formik = useFormik({

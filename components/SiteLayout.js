@@ -6,6 +6,7 @@ import { MdSearch } from 'react-icons/md'
 
 function Header() {
 	const { data, error } = useCategories();
+
 	return (
 		<div>
 			<div className="top_nav data_line ">
@@ -39,7 +40,6 @@ function Header() {
 							<div className="col-md-6 data_list_div">
 								<ul className="top_nav_ul data_list">
 									<li className="top_nav_li">
-
 									</li>
 									<li className="top_nav_li">
 									</li>
@@ -106,16 +106,17 @@ function Header() {
 								</a>
 							</li>
 							{
-								data != null ? (data.map(li => {
-									return (<li className="links_li" key={li.id}>
-										<Link href={`/categories/${li.id}`}>
-											<a href="#" className="link_a">
-												{li.name}
-											</a>
-										</Link>
-									</li>
-									)
-								}))
+								data != null ?
+									(data.data.map(li => {
+										return (<li className="links_li" key={li.id}>
+											<Link href={`/categories/${li.id}`}>
+												<a href="#" className="link_a">
+													{li.name}
+												</a>
+											</Link>
+										</li>
+										)
+									}))
 									: null
 							}
 
